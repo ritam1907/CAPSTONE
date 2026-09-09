@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeatherTunes - 100+ Recommendations</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>WeatherTunes</h1>
+    <p class="subtitle">High-capacity weather-driven music intelligence (100 Tracks)</p>
+  </header>
+
+  <div class="toolbar">
+    <button onclick="detectLocation()">📍 Detect My Location</button>
+    <button onclick="fetchRecommendations(18.62, 73.80)">🔄 Reset (Pune)</button>
+  </div>
+
+  <section class="weather-banner" id="weather-banner">
+    <div class="metric">
+      <span class="metric-label">Status</span>
+      <span class="metric-value">Connecting...</span>
+    </div>
+  </section>
+
+  <div class="section-title">
+    <span>Curated Playlist</span>
+    <span id="track-count">Loading 100 tracks...</span>
+  </div>
+
+  <div class="playlist-container">
+    <main class="grid" id="songs-grid"></main>
+  </div>
+
+  <script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    async function fetchRecommendations(lat, lon) {
+      try {
+        const banner = document.getElementById("weather-banner");
+        banner.innerHTML = `<div class="metric"><span class="metric-value">Fetching weather & computing 100 vector matches...</span></div>`;
+
+        const res = await fetch(`${API_BASE}/api/recommend?lat=${lat}&lon=${lon}&limit=100`);
+        const data = await res.json();
+
+        banner.innerHTML = `
+          <div class="metric">
+            <span class="metric-label">Condition</span>
+            <span class="metric-value">${data.weather.condition}</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Temperature</span>
+            <span class="metric-value">${data.weather.temperature} °C</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Humidity</span>
+            <span class="metric-value">${data.weather.humidity}%</span>
+          </div>
+        `;
+
+        document.getElementById("track-count").innerText = `${data.songs.length} Tracks Matched`;
+
+        const grid = document.getElementById("songs-grid");
+        grid.innerHTML = data.songs.map((song, index) => `
+          <div class="song-card">
+            <div>
+              <div class="track-header">
+                <div class="track-title" title="${song.track_name}">${song.track_name}</div>
+                <span class="track-num">#${index + 1}</span>
+              </div>
+              <div class="track-artist" title="${song.artists}">${song.artists}</div>
+              <span class="badge">${song.genre || 'unknown'}</span>
+            </div>
+            <iframe src="https://open.spotify.com/embed/track/${song.track_id}?utm_source=generator" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy"></iframe>
+          </div>
+        `).join("");
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("weather-banner").innerHTML = `
+          <div class="metric"><span class="metric-value" style="color: #f87171;">Error connecting to API. Is Uvicorn running?</span></div>
+        `;
+      }
+    }
+
+    function detectLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => fetchRecommendations(pos.coords.latitude, pos.coords.longitude),
+          () => fetchRecommendations(18.62, 73.80)
+        );
+      } else {
+        fetchRecommendations(18.62, 73.80);
+      }
+    }
+
+    fetchRecommendations(18.62, 73.80);
+  </script>
+</body>
+</html>
