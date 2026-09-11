@@ -1,82 +1,93 @@
+/* Importing a clean editorial sans-serif font resembling Co-Star's aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
 :root {
-  --bg: #090d16;
-  --card-bg: rgba(26, 34, 52, 0.7);
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #38bdf8;
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
+  --bg: #000000;
+  --card-bg: #000000;
+  --border: #ffffff;
+  --text: #ffffff;
+  --text-muted: #737373;
 }
 
 * { 
   box-sizing: border-box; 
   margin: 0; 
   padding: 0; 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  padding: 2rem 1.5rem;
+  padding: 3rem 2rem;
   max-width: 1400px;
   margin: 0 auto;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  letter-spacing: -0.01em;
 }
 
 header { 
-  margin-bottom: 1.5rem; 
+  margin-bottom: 2rem; 
   flex-shrink: 0; 
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
 }
 
 h1 { 
-  font-size: 2rem; 
+  font-size: 2.5rem; 
   font-weight: 700; 
   color: #fff; 
-  letter-spacing: -0.02em; 
+  text-transform: uppercase;
+  letter-spacing: -0.03em; 
 }
 
 p.subtitle { 
   color: var(--text-muted); 
-  margin-top: 0.25rem; 
-  font-size: 0.9rem; 
+  margin-top: 0.5rem; 
+  font-size: 0.85rem; 
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .toolbar {
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
   flex-shrink: 0;
 }
 
 button {
-  background: var(--accent);
-  color: #03131e;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  font-weight: 600;
+  background: transparent;
+  color: #fff;
+  border: 1px solid var(--border);
+  padding: 0.7rem 1.4rem;
+  border-radius: 0px; /* Sharp, brutalist edges */
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
 button:hover { 
-  opacity: 0.9; 
+  background: #fff; 
+  color: #000; 
 }
 
 .weather-banner {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  padding: 1.25rem 1.5rem;
-  border-radius: 12px;
+  padding: 1.5rem;
+  border-radius: 0px;
   display: flex;
-  gap: 2.5rem;
+  gap: 3rem;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
   flex-shrink: 0;
 }
@@ -87,28 +98,33 @@ button:hover {
 }
 
 .metric-label { 
-  font-size: 0.7rem; 
+  font-size: 0.65rem; 
   text-transform: uppercase; 
   color: var(--text-muted); 
-  letter-spacing: 0.05em; 
+  letter-spacing: 0.1em; 
 }
 
 .metric-value { 
-  font-size: 1.25rem; 
-  font-weight: 600; 
-  margin-top: 0.2rem; 
+  font-size: 1.1rem; 
+  font-weight: 500; 
+  margin-top: 0.3rem; 
   color: #fff; 
+  letter-spacing: -0.01em;
 }
 
 .section-title {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 500;
   margin-bottom: 1rem;
   color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 0.5rem;
 }
 
 .playlist-container {
@@ -119,37 +135,40 @@ button:hover {
 }
 
 .playlist-container::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 .playlist-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 4px;
+  background: #000000;
 }
 
 .playlist-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
+  background: #333333;
 }
 
 .playlist-container::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: #ffffff;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1rem;
 }
 
 .song-card {
   background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem;
+  border: 1px solid #262626; /* Subtle dark border */
+  border-radius: 0px;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: border-color 0.2s;
+}
+
+.song-card:hover {
+  border-color: #ffffff; /* Highlights sharp white on hover */
 }
 
 .track-header { 
@@ -160,9 +179,10 @@ button:hover {
 }
 
 .track-num { 
-  font-size: 0.75rem; 
+  font-size: 0.7rem; 
   color: var(--text-muted); 
-  font-weight: 600; 
+  font-weight: 500; 
+  letter-spacing: 0.05em;
 }
 
 .track-title { 
@@ -177,7 +197,7 @@ button:hover {
 .track-artist { 
   color: var(--text-muted); 
   font-size: 0.8rem; 
-  margin-top: 0.15rem; 
+  margin-top: 0.2rem; 
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis; 
@@ -185,19 +205,23 @@ button:hover {
 
 .badge {
   display: inline-block;
-  background: rgba(56, 189, 248, 0.15);
-  color: var(--accent);
-  padding: 0.15rem 0.45rem;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  margin: 0.5rem 0;
+  background: transparent;
+  border: 1px solid #333;
+  color: #a3a3a3;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0px;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0.75rem 0;
   width: fit-content;
 }
 
 iframe {
-  border-radius: 8px;
+  border-radius: 0px;
   width: 100%;
   height: 70px;
   border: none;
   margin-top: 0.25rem;
+  filter: invert(1) hue-rotate(180deg); /* Optional: Dark mode alignment for Spotify iframe widget */
 }
