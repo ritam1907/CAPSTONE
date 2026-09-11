@@ -4,7 +4,7 @@ import numpy as np
 # Load dataset
 df_raw = pd.read_csv("dataset.csv")
 
-# Clean column names (strip whitespace and lowercase)
+# (strip whitespace and lowercase)
 df_raw.columns = df_raw.columns.str.strip().str.lower()
 
 # Map common dataset variations for title, artist, ID, and features
@@ -30,13 +30,13 @@ for col in feature_cols:
     else:
         df_raw[col] = 0.5
 
-# Drop rows where essential identifiers or features are missing
+# Drop rows where identifiers are missing
 df_raw = df_raw.dropna(subset=['track_id', 'track_name', 'artists'] + feature_cols).reset_index(drop=True)
 
 def recommend_tracks(target_vector, top_n=100):
     features = df_raw[feature_cols].values
     
-    # Extract target values safely
+    # Extract target values
     target = np.array([
         target_vector.get('danceability', 0.5),
         target_vector.get('energy', 0.5),
@@ -44,10 +44,10 @@ def recommend_tracks(target_vector, top_n=100):
         target_vector.get('tempo', 120) / 200.0
     ])
     
-    # Compute Euclidean distance across features
+    # Euclidean distance calculation
     distances = np.linalg.norm(features - target, axis=1)
     df_raw['distance'] = distances
     
-    # Return top N matches
+    # Return top matches
     recommended = df_raw.sort_values('distance').head(top_n)
     return recommended

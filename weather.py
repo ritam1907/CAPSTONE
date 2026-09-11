@@ -18,37 +18,37 @@ def weather_to_target_vector(weather_data: dict):
     is_day = bool(weather_data["is_day"])
     temp = weather_data["temperature_2m"]
 
-    # Expanded features matching your new 1.2M dataset schema:
     # ["danceability", "energy", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "loudness"]
-    if code in [0, 1]:  # Sunny / Clear
+
+    if code in [0, 1]: 
         condition = "Sunny / Clear Sky"
         vector = {
             "danceability": 0.70, "energy": 0.75, "speechiness": 0.05, 
             "acousticness": 0.15, "instrumentalness": 0.05, "liveness": 0.15, 
             "valence": 0.80, "tempo": 125.0, "loudness": -6.0
         }
-    elif code in [2, 3]:  # Cloudy / Overcast
+    elif code in [2, 3]: 
         condition = "Cloudy / Overcast"
         vector = {
             "danceability": 0.50, "energy": 0.50, "speechiness": 0.04, 
             "acousticness": 0.40, "instrumentalness": 0.10, "liveness": 0.12, 
             "valence": 0.50, "tempo": 105.0, "loudness": -9.0
         }
-    elif code in [51, 53, 55, 61, 63, 65, 80, 81, 82]:  # Rainy / Drizzle
+    elif code in [51, 53, 55, 61, 63, 65, 80, 81, 82]:
         condition = "Rainy / Drizzle"
         vector = {
             "danceability": 0.35, "energy": 0.35, "speechiness": 0.04, 
             "acousticness": 0.70, "instrumentalness": 0.25, "liveness": 0.10, 
             "valence": 0.25, "tempo": 85.0, "loudness": -14.0
         }
-    elif code in [95, 96, 99]:  # Thunderstorm
+    elif code in [95, 96, 99]: 
         condition = "Thunderstorm"
         vector = {
             "danceability": 0.45, "energy": 0.85, "speechiness": 0.08, 
             "acousticness": 0.10, "instrumentalness": 0.20, "liveness": 0.20, 
             "valence": 0.20, "tempo": 130.0, "loudness": -5.0
         }
-    else:  # Fog / Mist
+    else:
         condition = "Misty / Foggy"
         vector = {
             "danceability": 0.40, "energy": 0.40, "speechiness": 0.04, 
@@ -56,7 +56,7 @@ def weather_to_target_vector(weather_data: dict):
             "valence": 0.40, "tempo": 95.0, "loudness": -11.0
         }
 
-    # Nighttime adjustment
+
     if not is_day:
         condition += " (Night)"
         vector["energy"] = max(0.10, vector["energy"] - 0.20)
