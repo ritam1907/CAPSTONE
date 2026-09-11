@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from weather import get_current_weather, weather_to_target_vector
 from recommend import recommend_tracks
 
-app = FastAPI(title="WeatherTunes API")
+app = FastAPI(title="WeatherVane API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,7 +15,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"status": "online", "message": "WeatherTunes API is running"}
+    return {"status": "online", "message": "WeatherVane API is running"}
 
 @app.get("/api/recommend")
 def get_recommendations(
